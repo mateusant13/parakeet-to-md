@@ -1,0 +1,98 @@
+PARAKEET-TO-MD - COMO USAR
+==========================
+
+O QUE E
+  Transforma video ou audio em texto (.md), com o tempo de cada frase.
+  Roda na sua maquina: depois de instalado nao precisa de internet, nem de conta,
+  e nada e enviado para fora.
+
+
+PRIMEIRA VEZ (so uma vez)
+-------------------------
+1. Extraia esta pasta onde quiser (ex.: Documentos\parakeet-to-md).
+   Nao precisa ser "Arquivos de Programas" e nao precisa de administrador.
+
+2. Duplo-clique em:  install.bat
+
+   - Ele baixa tudo sozinho: ffmpeg, Python (se o PC nao tiver) e o modelo.
+   - Processador: ~420 MB de modelo. Placa de video: ~1,6 GB (mais o de processador,
+     para nao ficar sem opcao se o driver falhar).
+   - Leva de 2 a 15 minutos conforme a internet. A janela preta mostra o progresso.
+   - No fim tem que aparecer:   Install OK.
+   - Se o SmartScreen/antivirus avisar, permita: sao arquivos baixados na hora.
+
+   install.bat --cpu   forca so processador (download menor)
+   install.bat --gpu   forca a instalacao de placa de video
+   Rodar de novo nao estraga nada.
+
+
+USAR
+----
+1. Coloque seus videos e audios na pasta:   input\
+
+2. Duplo-clique em:   run.bat
+
+3. Espere. O texto pronto fica em  output\  e o original vai para  archive\
+   O que deu erro fica em input\, com o motivo escrito na tela.
+
+4. Abra o .md com qualquer editor (Bloco de Notas, VS Code, Obsidian...).
+
+
+COMO FICA O TEXTO
+-----------------
+  # nome-do-video
+
+  **[00:00:05]** primeira frase falada.
+  **[00:00:12]** a frase seguinte.
+
+
+QUANTO TEMPO DEMORA
+-------------------
+  A janela diz, no fim de cada arquivo, quantas vezes mais rapido que o audio foi:
+
+      1.2x realtime   = 1 minuto de audio em ~50 segundos
+      30x realtime    = 1 hora de audio em ~2 minutos
+
+  A primeira execucao carrega o modelo (15 a 60 s, uma vez por execucao e nao por
+  arquivo). Junte varios arquivos e rode de uma vez.
+
+  A linha "engine" mostra onde ele esta rodando:
+
+      Parakeet TDT 0.6B v3 (fp16, TensorRT)   placa NVIDIA
+      Parakeet TDT 0.6B v3 (fp16, DirectML)   placa AMD ou Intel
+      Parakeet TDT 0.6B v3 (int4, CPU)        processador
+
+  CPU funciona sempre, so e mais devagar.
+
+
+ONDE ESTA CADA COISA
+--------------------
+  input\      seus arquivos (o que voce quer transcrever)
+  output\     os textos prontos (.md)
+  archive\    os originais ja processados
+  others\     o programa, o Python, o modelo, o ffmpeg. Nao mexa aqui.
+
+
+DEU ERRO?
+---------
+  "not installed yet"        -> rode install.bat
+  "ffmpeg not found"         -> rode install.bat de novo
+  nada aparece em output\    -> leia a linha FAILED na janela: ela diz o arquivo e o
+                                motivo, e o arquivo continua em input\
+  esta muito lento           -> veja a linha "engine": se disser CPU, rode install.bat
+                                (ou install.bat --gpu) para usar a placa
+  o texto veio vazio         -> o arquivo nao tem fala (so musica/silencio)
+
+
+DESINSTALAR
+-----------
+  uninstall.bat           remove o programa (~2 GB) e MANTEM seus textos em output\
+  uninstall.bat --purge   apaga tambem input\, output\ e archive\ (pede para digitar YES)
+
+  Ele nunca instalou nada fora desta pasta: nao mexe no PATH, nem no registro,
+  nem precisa de administrador. Para remover de vez, apague a pasta depois.
+
+
+AJUDA TECNICA
+-------------
+  README.md (em ingles): flags, formato do markdown, GPU/CPU, modelos e licencas.
