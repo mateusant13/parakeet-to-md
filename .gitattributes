@@ -1,0 +1,4 @@
+# Normalise line endings so a clone on Linux/macOS and a clone on Windows behave the same.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf

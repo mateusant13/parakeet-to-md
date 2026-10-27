@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "parakeet-to-md"
+version = "0.4.0"
+description = "Transcribe audio/video folders to readable, timestamped markdown with Parakeet TDT v3 (ONNX Runtime: TensorRT, CUDA, DirectML, CPU)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+# One runtime per machine: they all provide the same `onnxruntime` module and cannot coexist.
+cpu = ["onnxruntime>=1.18"]
+# NVIDIA: TensorRT (fp16 encoder) then CUDA. All DLLs come from these wheels - no system CUDA,
+# no admin rights, nothing on PATH.
+gpu = [
+    "onnxruntime-gpu>=1.22,<1.27",
+    "tensorrt-cu12>=10",
+    "nvidia-cudnn-cu12>=9,<10",
+    "nvidia-cublas-cu12>=12",
+    "nvidia-cufft-cu12>=11",
+    "nvidia-cuda-runtime-cu12>=12",
+]
+# AMD and Intel: DirectML, one wheel, vendor-neutral.
+dml = ["onnxruntime-directml>=1.20"]
+
+[project.scripts]
+parakeet-to-md = "parakeet_to_md.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["app"]
+
+[tool.pytest.ini_options]
+testpaths = ["app/tests"]
+addopts = "-q"

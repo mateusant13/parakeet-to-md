@@ -1,0 +1,28 @@
+# downloaded model artifacts (CC-BY-4.0, not redistributed here)
+models/
+
+# tools fetched by install.bat on the target machine (200 MB of binaries, not redistributed here):
+# tools\ffmpeg\bin\ffmpeg.exe + ffprobe.exe, tools\uv\uv.exe
+tools/
+
+# python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# tool scratch: download leftovers, TensorRT engine cache, code index
+*.part
+trt-engines/
+.codeintel/
+
+# working folders: the folders are tracked, their contents are not
+input/*
+!input/.gitkeep
+archive/*
+!archive/.gitkeep
+output/*
+!output/.gitkeep

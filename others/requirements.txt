@@ -1,0 +1,6 @@
+# Runtime dependencies of parakeet-to-md.
+# install.bat installs the package with the extra that matches the machine
+# (`pip install -e "others[cpu]"`, `[gpu]` or `[dml]` in others/pyproject.toml); this file exists so
+# `pip install -r requirements.txt` gives the CPU path on its own.
+numpy>=1.24
+onnxruntime>=1.18
